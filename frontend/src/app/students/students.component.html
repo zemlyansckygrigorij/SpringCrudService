@@ -1,0 +1,27 @@
+<p>
+  StudentsComponent work !
+</p>
+
+
+<table >
+  <tr>
+    <th> <h4> id</h4></th>
+    <th> <h4> name</h4></th>
+    <th> <h4>  age</h4></th>
+  </tr>
+  <tbody *ngFor="let student of students">
+    <tr>
+      <td><h4> {{student.id}}</h4></td>
+      <td><h4> {{student.name}}</h4></td>
+      <td><h4> {{student.age}}</h4></td>
+    </tr>
+  </tbody>
+
+</table>
+
+
+  <div *ngFor="let student of students" >
+    <h4> {{student.id}} - {{student.name}}- {{student.age}}
+    </h4>
+  </div>
+

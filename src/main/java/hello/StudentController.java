@@ -5,7 +5,10 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.*;
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)/*for  avoid error Access-Control-Allow-Origin in angular
+Cross-origin resource sharing (CORS)
 
+*/
 @RestController
 @RequestMapping("/student")
 public class StudentController{
