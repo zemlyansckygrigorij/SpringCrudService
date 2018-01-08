@@ -1,4 +1,4 @@
-import {Component, Injectable, OnInit} from '@angular/core';
+import {Component, Injectable, Input, OnInit} from '@angular/core';
 import {Student} from "../student";
 import {DataService} from "../data.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
@@ -13,52 +13,65 @@ import { Http, Response, RequestOptions, Headers } from '@angular/http';
 @Injectable()
 export class StudentsComponent implements OnInit {
   students: Student[];
+  @Input()  formStudent= new  Student();
+  url = 'http://localhost:8080/student';
+  private headers = new HttpHeaders({'Content-Type': 'application/json'});
  // headers = new HttpHeaders();
 
   constructor(private http: HttpClient){
   }
   ngOnInit(): void {
-    this.http.get<Student[]>('http://localhost:8080/student').subscribe(data => {
+    this.http.get<Student[]>(this.url).subscribe(data => {
       this.students = data;
       console.log(data);
     },
       err => {
         console.log("Error occured.")
       });
+
+    this.formStudentNull();
+
   }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- /* students: Student[];
-  //dataService: DataService;
-  private studentsUrl = 'http//localhost:8080/student/';
-  constructor(private httpClient: HttpClient) { }
-
-  getStudents(): Observable<Student[]> {
-    alert(" getStudents()");
-    //this.http.get<Student[]>(' studentsUrl').toPromise().then(students => this.students = students);
-    return this.httpClient.get<Student[]>(' studentsUrl');
+  selectStudent(st){
+    this.formStudent = st;
   }
 
-  ngOnInit(): void {
-alert("ngOnInit()");
-    this.getStudents().subscribe(students => this.students = students);
-  }*/
+  createStudent(){
+    this.formStudent = new  Student();
+    this.students.push(this.formStudent)
+  }
+  updateStudent(){
+
+  }
+
+  deleteStudent(id: number){
+
+    let index = this.students.indexOf(this.formStudent)
+    if(index !=-1){
+      this.students.splice(index, 1);
+    }
+
+    this.http.delete(this.url+'/${this.formStudent.id}', {headers: this.headers})
+      .toPromise()
+      .then(() => null)
+      .catch(this.handleError);
+
+    this.formStudentNull();
+  }
+
+
+  private handleError(error: any): Promise<any> {
+    console.error('Error', error); // for demo purposes only
+    return Promise.reject(error.message || error);
+  }
+
+
+  formStudentNull(){
+    this.formStudent.id = -1;
+    this.formStudent.name = "";
+    this.formStudent.age = 0;
+  }
 }

@@ -1,19 +1,31 @@
-package hello;
+package hello.model;
 
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+@Entity
+@Table(name = "students")
 public class Student{
     private static long count;
-    private final long id;
+
+    @Id
+    @Column(name = "id", nullable = false, updatable = false)
+    private long id;
+
+    @Column(name = "name", nullable = false, unique = false)
     private String name;
+    @Column(name = "age", nullable = false, unique = false)
     private long age;
     static{
         count = 1;
     }
-    public Student(long age, String name) {
+/*    public Student(long age, String name) {
         this.id = count;
         this.age = age;
         this.name = name;
         count++;
-    }
+    }*/
 
     public long getId() {
         return id;
