@@ -47,52 +47,23 @@ public class StudentController{
         Student student = studentRepo.findOne(id);
         studentRepo.delete(id);
 
-      //  Student student = students.stream().filter(s ->s.getId() == id).collect(Collectors.toList()).get(0);
-       // students.remove(student);
         return new ResponseEntity<>(studentRepo.findAll(), HttpStatus.OK);
     }
 
 
-    @RequestMapping( method = RequestMethod.POST)
-    public ArrayList<Student> createStudent(@RequestBody Student student) {
-        students.add(student);
-        return  students;
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<?> addStudent(@RequestBody Student student) {
+        return new ResponseEntity<>(studentRepo.save(student), HttpStatus.CREATED);
+    }
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<?> updateStudent(@RequestBody Student student) {
+       // Student updatestudent = studentRepo.findOne(student.getId());
+
+        studentRepo.findOne(student.getId()).setAge(student.getAge());
+        studentRepo.findOne(student.getId()).setName(student.getName());
+
+        return new ResponseEntity<>(studentRepo.findOne(student.getId()), HttpStatus.OK);
     }
 
-
-
-
-
-/*************************************************************************************/
-
-  private ArrayList<Student> students = new ArrayList<Student>();
-  /*  {
-        students.add(new Student(21, "Mary"));
-        students.add(new Student(19, "Peter"));
-        students.add(new Student(23, "Lauren"));
-        students.add(new Student(24, "Thomac"));
-        students.add(new Student(17, "Marianna"));
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Student getStudent(@PathVariable int id) {
-        return  students.stream().filter(student ->student.getId() == id).collect(Collectors.toList()).get(0);
-    }
-    @RequestMapping(method = RequestMethod.GET)
-    public ArrayList<Student> getAllStudents() {
-        return  students;
-    }
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ArrayList<Student> deleteStudent(@PathVariable long id) {
-        Student student = students.stream().filter(s ->s.getId() == id).collect(Collectors.toList()).get(0);
-        students.remove(student);
-        return  students;
-    }
-    @RequestMapping( method = RequestMethod.POST)
-    public ArrayList<Student> createStudent(@RequestBody Student student) {
-        students.add(student);
-        return  students;
-    }
-
-*/
 }

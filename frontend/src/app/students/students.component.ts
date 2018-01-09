@@ -16,7 +16,7 @@ export class StudentsComponent implements OnInit {
   @Input()  formStudent= new  Student();
   url = 'http://localhost:8080/student';
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
- // headers = new HttpHeaders();
+
 
   constructor(private http: HttpClient){
   }
@@ -33,16 +33,11 @@ export class StudentsComponent implements OnInit {
 
   }
 
-
+/*
 
   selectStudent(st){
     this.formStudent = st;
   }
-
-  /*createStudent(){
-    this.formStudent = new  Student();
-    this.students.push(this.formStudent)
-  }*/
 
   createStudent(){
     this.formStudent = new  Student();
@@ -63,11 +58,7 @@ export class StudentsComponent implements OnInit {
   }
 
   deleteStudent(id: number){
-/*
-    let index = this.students.indexOf(this.formStudent)
-    if(index !=-1){
-      this.students.splice(index, 1);
-    }*/
+
 
     this.http.delete(this.url+'/${this.formStudent.id}', {headers: this.headers})
       .toPromise()
@@ -76,7 +67,7 @@ export class StudentsComponent implements OnInit {
 
     this.formStudentNull();
   }
-
+*/
 
   private handleError(error: any): Promise<any> {
     console.error('Error', error); // for demo purposes only
