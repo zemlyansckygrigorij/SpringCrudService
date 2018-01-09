@@ -39,20 +39,35 @@ export class StudentsComponent implements OnInit {
     this.formStudent = st;
   }
 
-  createStudent(){
+  /*createStudent(){
     this.formStudent = new  Student();
     this.students.push(this.formStudent)
-  }
-  updateStudent(){
+  }*/
 
+  createStudent(){
+    this.formStudent = new  Student();
+    this.students.push(this.formStudent);
+     this.http
+      .post(this.url, JSON.stringify( this.formStudent), {headers: this.headers})
+      .toPromise()
+     // .then(res => res.json() as Student)
+      .catch(this.handleError);
+  }
+
+  updateStudent(){
+    this.http
+      .put(this.url, JSON.stringify( this.formStudent), {headers: this.headers})
+      .toPromise()
+      .then(() =>  this.formStudent)
+      .catch(this.handleError);
   }
 
   deleteStudent(id: number){
-
+/*
     let index = this.students.indexOf(this.formStudent)
     if(index !=-1){
       this.students.splice(index, 1);
-    }
+    }*/
 
     this.http.delete(this.url+'/${this.formStudent.id}', {headers: this.headers})
       .toPromise()

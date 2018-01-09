@@ -10,8 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)/*for  avoid error Access-Control-Allow-Origin in angular
+
+//@CrossOrigin
+
+//@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+/*for  avoid error Access-Control-Allow-Origin in angular
 Cross-origin resource sharing (CORS)
 
 */
@@ -20,6 +25,8 @@ Cross-origin resource sharing (CORS)
 @RequestMapping("/student")
 public class StudentController{
 /***************************************************************/
+// @Autowired
+// private AuthenticationManager authenticationManager;
     @Autowired
     private StudentRepository studentRepo;
 
@@ -36,11 +43,16 @@ public class StudentController{
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ArrayList<Student> deleteStudent(@PathVariable long id) {
-        Student student = students.stream().filter(s ->s.getId() == id).collect(Collectors.toList()).get(0);
-        students.remove(student);
-        return  students;
+    public ResponseEntity<Collection<Student>> deleteStudent(@PathVariable long id) {
+        Student student = studentRepo.findOne(id);
+        studentRepo.delete(id);
+
+      //  Student student = students.stream().filter(s ->s.getId() == id).collect(Collectors.toList()).get(0);
+       // students.remove(student);
+        return new ResponseEntity<>(studentRepo.findAll(), HttpStatus.OK);
     }
+
+
     @RequestMapping( method = RequestMethod.POST)
     public ArrayList<Student> createStudent(@RequestBody Student student) {
         students.add(student);
@@ -48,40 +60,6 @@ public class StudentController{
     }
 
 
-
-
-
-
-
-
-
-
-/*
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Student getStudent(@PathVariable long id) {
-        return  studentRepo.findOne(id);
-    }
-
-    @RequestMapping(method = RequestMethod.GET)
-    public ArrayList<Student> getAllStudents(){
-            return (ArrayList<Student>) studentRepo.findAll();
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ArrayList<Student> deleteStudent(@PathVariable long id) {
-        Student student = students.stream().filter(s ->s.getId() == id).collect(Collectors.toList()).get(0);
-        students.remove(student);
-        return  students;
-    }
-    @RequestMapping( method = RequestMethod.POST)
-    public ArrayList<Student> createStudent(@RequestBody Student student) {
-        students.add(student);
-        return  students;
-    }
-
-
-
-*/
 
 
 

@@ -1,16 +1,16 @@
 package hello.model;
 
-import javax.persistence.Id;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 @Entity
 @Table(name = "students")
 public class Student{
     private static long count;
 
+
     @Id
-    @Column(name = "id", nullable = false, updatable = false)
+@GeneratedValue(strategy=GenerationType.IDENTITY)
+@Column(name = "id", nullable = false, updatable = false)
     private long id;
 
     @Column(name = "name", nullable = false, unique = false)
