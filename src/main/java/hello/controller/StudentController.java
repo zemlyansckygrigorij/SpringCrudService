@@ -13,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
-//@CrossOrigin
+import javax.validation.Valid;
+
+@CrossOrigin
 
 //@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 /*for  avoid error Access-Control-Allow-Origin in angular
@@ -56,7 +58,7 @@ public class StudentController{
     public ResponseEntity<?> addStudent(@RequestBody Student student) {
         return new ResponseEntity<>(studentRepo.save(student), HttpStatus.CREATED);
     }
-    @RequestMapping(method = RequestMethod.PUT)
+   /* @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<?> updateStudent(@RequestBody Student student) {
        // Student updatestudent = studentRepo.findOne(student.getId());
 
@@ -64,6 +66,19 @@ public class StudentController{
         studentRepo.findOne(student.getId()).setName(student.getName());
 
         return new ResponseEntity<>(studentRepo.findOne(student.getId()), HttpStatus.OK);
+    }*/
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public @ResponseBody ResponseEntity<?>  updateStudent(@PathVariable("id") long id,
+                                         @RequestBody @Valid Student student){
+      /*  Student updatestudent = studentRepo.findOne(id);
+        updatestudent.setAge(student.getAge());
+        updatestudent.setName(student.getName());
+
+        return new ResponseEntity<>(updatestudent , HttpStatus.OK);*/
+
+        return new ResponseEntity<>(studentRepo.save(student), HttpStatus.OK);
     }
+
 
 }

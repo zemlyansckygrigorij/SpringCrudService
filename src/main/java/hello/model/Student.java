@@ -1,6 +1,7 @@
 package hello.model;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 
 @Entity
 @Table(name = "students")
@@ -13,10 +14,12 @@ public class Student{
 @Column(name = "id", nullable = false, updatable = false)
     private long id;
 
-    @Column(name = "name", nullable = false, unique = false)
+    @Column(name = "name", nullable = false, unique = false, insertable = true, updatable = true)
     private String name;
-    @Column(name = "age", nullable = false, unique = false)
+
+    @Column(name = "age", nullable = false, unique = false, insertable = true, updatable = true)
     private long age;
+
     static{
         count = 1;
     }
