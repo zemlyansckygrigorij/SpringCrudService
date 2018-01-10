@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     BrowserModule,
     HttpClientModule // Импортируем модуль
+
   ],
   providers: [],
   bootstrap: [AppComponent]

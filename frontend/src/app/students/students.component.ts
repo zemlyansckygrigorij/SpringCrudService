@@ -4,7 +4,6 @@ import {DataService} from "../data.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-students',
@@ -44,21 +43,20 @@ export class StudentsComponent implements OnInit {
 
   create(){
     this.createStudent();
-   // this.getStudent();
-    //this.formStudentNull();
     this.ngOnInit();
+    window.location.reload();
   }
   update(){
     this.updateStudent();
-   // this.getStudent();
-  //  this.formStudentNull();
     this.ngOnInit();
+    window.location.reload();
+
+
   }
   delete(){
     this.deleteStudent();
-  //  this.getStudent();
-   // this.formStudentNull();
     this.ngOnInit();
+    window.location.reload();//reload this.page
 
 
   }
