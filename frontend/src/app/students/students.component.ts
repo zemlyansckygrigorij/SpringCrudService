@@ -15,7 +15,7 @@ import { Http, Response, RequestOptions, Headers } from '@angular/http';
 export class StudentsComponent implements OnInit {
 
   students: Student[];
-  @Input()  formStudent= new  Student();
+  @Input()  formStudent = new  Student();
   url = 'http://localhost:8080/student';
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
@@ -23,8 +23,7 @@ export class StudentsComponent implements OnInit {
   constructor(private http: HttpClient){
   }
   ngOnInit(): void {
-    this.getStudent();
-    this.formStudentNull();
+    this.refreshPage();
   }
 
   selectStudent(st){
@@ -43,31 +42,30 @@ export class StudentsComponent implements OnInit {
 
   create(){
     this.createStudent();
-    this.ngOnInit();
+    this.refreshPage();
     window.location.reload();
   }
   update(){
     this.updateStudent();
-    this.ngOnInit();
+    this.refreshPage();
     window.location.reload();
 
 
   }
   delete(){
     this.deleteStudent();
-    this.ngOnInit();
+    this.refreshPage();
     window.location.reload();//reload this.page
-
 
   }
 
 
   createStudent(){
-   this.students.push(this.formStudent);
-     this.http
+    this.students.push(this.formStudent);
+    this.http
       .post(this.url, JSON.stringify( this.formStudent), {headers: this.headers})
       .toPromise()
-     // .then(res => res.json() as Student)
+      // .then(res => res.json() as Student)
       .catch(this.handleError);
   }
 
@@ -75,7 +73,7 @@ export class StudentsComponent implements OnInit {
     this.http
       .put(this.url+'/'+this.formStudent.id, JSON.stringify( this.formStudent), {headers: this.headers})
       .toPromise()
-     // .then(() =>  this.formStudent)
+      // .then(() =>  this.formStudent)
       .catch(this.handleError);
   }
 
@@ -86,8 +84,17 @@ export class StudentsComponent implements OnInit {
       .catch(this.handleError);
 
   }
+/****************************************** insert ***********************************************************/
+  deleteStudentById(student: Student){
+    this.formStudent = student;
+    this.delete();
+  }
 
+  loadStudentToEdit(student: Student){
+    this.selectStudent(student)
+  }
 
+/*******************************************************************************************************/
   private handleError(error: any): Promise<any> {
     console.error('Error', error); // for demo purposes only
     return Promise.reject(error.message || error);
@@ -98,5 +105,10 @@ export class StudentsComponent implements OnInit {
     this.formStudent.id = -1;
     this.formStudent.name = "";
     this.formStudent.age = 0;
+  }
+
+  refreshPage(){
+    this.getStudent();
+    this.formStudentNull();
   }
 }

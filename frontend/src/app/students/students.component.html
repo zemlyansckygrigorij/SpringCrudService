@@ -17,7 +17,7 @@
   <div class="btn-group">
     <button type="submit" class="btn btn-success" (click)="create()" >Create</button>
    <button type="submit" class="btn btn-success" (click)="update()">Update</button>
-    <button class="btn btn-danger" (click)="delete()">Delete</button>
+    <!-- <button class="btn btn-danger" (click)="delete()">Delete</button>-->
   </div>
 
 </form>
@@ -29,10 +29,12 @@
     <th> <h4>  age</h4></th>
   </tr>
   <tbody *ngFor="let student of students">
-    <tr (click)="selectStudent(student)"  >
+    <tr> <!-- (click)="selectStudent(student)" -->
       <td><h4> {{student.id}}</h4></td>
       <td><h4> {{student.name}}</h4></td>
       <td><h4> {{student.age}}</h4></td>
+      <td><button type="button" (click)="loadStudentToEdit(student)">Edit</button> </td>
+      <td><button type="button" (click)="deleteStudentById(student)">Delete</button></td>
     </tr>
   </tbody>
 
