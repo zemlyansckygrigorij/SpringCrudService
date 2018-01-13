@@ -1,0 +1,12 @@
+server:
+  port: 8080
+#
+## DataBase
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/stud
+    username: root
+    password: uhbujhbq
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    database: MYSQL
