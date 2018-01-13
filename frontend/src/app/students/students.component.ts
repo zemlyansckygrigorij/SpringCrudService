@@ -3,7 +3,8 @@ import {Student} from "../student";
 import {DataService} from "../data.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
-import { Http, Response, RequestOptions, Headers } from '@angular/http';
+
+import {StudentsService} from "./student.service.component";
 
 @Component({
   selector: 'app-students',
@@ -15,91 +16,50 @@ import { Http, Response, RequestOptions, Headers } from '@angular/http';
 export class StudentsComponent implements OnInit {
 
   students: Student[];
+  service:  StudentsService;
   @Input()  formStudent = new  Student();
-  url = 'http://localhost:8080/student';
-  private headers = new HttpHeaders({'Content-Type': 'application/json'});
+
 
 
   constructor(private http: HttpClient){
-  }
-  ngOnInit(): void {
+    this.service= new StudentsService(http);
     this.refreshPage();
   }
+  ngOnInit(): void {}
 
   selectStudent(st){
     this.formStudent = st;
   }
 
   getStudent(){
-    this.http.get<Student[]>(this.url).subscribe(data => {
-        this.students = data;
-        console.log(data);
-      },
-      err => {
-        console.log("Error occured.")
-      });
+    this.service.getStudent().subscribe(students => this.students = students);
   }
 
   create(){
-    this.createStudent();
-    this.refreshPage();
+    this.service.createStudent(this.formStudent);
     window.location.reload();
   }
+
   update(){
-    this.updateStudent();
-    this.refreshPage();
+    this.service.updateStudent(this.formStudent);
     window.location.reload();
-
-
   }
+
   delete(){
-    this.deleteStudent();
-    this.refreshPage();
+    this.service.deleteStudent(this.formStudent);
     window.location.reload();//reload this.page
-
   }
 
-
-  createStudent(){
-    this.students.push(this.formStudent);
-    this.http
-      .post(this.url, JSON.stringify( this.formStudent), {headers: this.headers})
-      .toPromise()
-      // .then(res => res.json() as Student)
-      .catch(this.handleError);
-  }
-
-  updateStudent(){
-    this.http
-      .put(this.url+'/'+this.formStudent.id, JSON.stringify( this.formStudent), {headers: this.headers})
-      .toPromise()
-      // .then(() =>  this.formStudent)
-      .catch(this.handleError);
-  }
-
-  deleteStudent(){
-    this.http.delete(this.url+'/'+this.formStudent.id, {headers: this.headers})
-      .toPromise()
-      .then(() => null)
-      .catch(this.handleError);
-
-  }
-/****************************************** insert ***********************************************************/
   deleteStudentById(student: Student){
-    this.formStudent = student;
-    this.delete();
+    this.service.deleteStudent(student);
+    window.location.reload();//reload this.page
   }
-
+//formStudent update select student
   loadStudentToEdit(student: Student){
-    this.selectStudent(student)
+    this.formStudent.id = student.id;
+    this.service.updateStudent(this.formStudent);
+    window.location.reload();
   }
-
-/*******************************************************************************************************/
-  private handleError(error: any): Promise<any> {
-    console.error('Error', error); // for demo purposes only
-    return Promise.reject(error.message || error);
-  }
-
 
   formStudentNull(){
     this.formStudent.id = -1;
