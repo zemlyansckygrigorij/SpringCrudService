@@ -6,9 +6,9 @@ import {Observable} from "rxjs/Observable";
 
 export class StudentsService implements OnInit {
 
-  url = 'http://localhost:8080/student';
+  //url = //'http://localhost:8080/student';
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
-
+  url =  'https://app-student.herokuapp.com/student';
   ngOnInit(): void {}
   constructor(private http: HttpClient){}
 
@@ -23,6 +23,7 @@ export class StudentsService implements OnInit {
       .toPromise()
       // .then(res => res.json() as Student)
       .catch(this.handleError);
+    console.log('create() service ' + student);
   }
 
   updateStudent(student: Student){
@@ -31,6 +32,8 @@ export class StudentsService implements OnInit {
       .toPromise()
       // .then(() =>  this.formStudent)
       .catch(this.handleError);
+    console.log('update() service ' + student);
+    setTimeout(window.location.reload(), 10000);
   }
 
   deleteStudent(student: Student){
@@ -38,7 +41,7 @@ export class StudentsService implements OnInit {
       .toPromise()
       .then(() => null)
       .catch(this.handleError);
-
+    console.log(' deleteStudent service ' + student);
   }
 
   private handleError(error: any): Promise<any> {

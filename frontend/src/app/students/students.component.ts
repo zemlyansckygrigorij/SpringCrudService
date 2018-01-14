@@ -36,29 +36,47 @@ export class StudentsComponent implements OnInit {
   }
 
   create(){
+    setTimeout(window.location.reload(), 1000);
     this.service.createStudent(this.formStudent);
-    window.location.reload();
+   // window.location.reload();
+    console.log('create() ' + this.formStudent);
+    alert("change done !");
+    window.location.reload();//reload this.page
+  //  setTimeout(window.location.reload(), 1000);
+
   }
 
   update(){
     this.service.updateStudent(this.formStudent);
-    window.location.reload();
+  //  window.location.reload();
+    console.log('update() ' + this.formStudent);
+    setTimeout(window.location.reload(), 1000);
   }
 
   delete(){
     this.service.deleteStudent(this.formStudent);
-    window.location.reload();//reload this.page
+   // window.location.reload();//reload this.page
+    console.log('delete() ' + this.formStudent);
+    setTimeout(window.location.reload(), 1000);
   }
 
   deleteStudentById(student: Student){
     this.service.deleteStudent(student);
+  //  window.location.reload();//reload this.page
+    console.log('deleteStudentById() ' + this.formStudent);
+    alert("change done !");
     window.location.reload();//reload this.page
+  //  setTimeout(window.location.reload(), 10000);
   }
 //formStudent update select student
   loadStudentToEdit(student: Student){
     this.formStudent.id = student.id;
     this.service.updateStudent(this.formStudent);
-    window.location.reload();
+    alert("change done !");
+    console.log(' loadStudentToEdit() ' + this.formStudent);
+
+    window.location.reload();//reload this.page
+  //  setTimeout(window.location.reload(), 10000);
   }
 
   formStudentNull(){
